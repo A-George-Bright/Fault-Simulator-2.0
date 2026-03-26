@@ -1,0 +1,76 @@
+<!-- src/app/components/login/login.component.html -->
+<div class="login-page">
+
+  <div class="login-card">
+
+    <div class="login-header">
+      <div class="login-logo">⬡</div>
+      <h1>FaultBank</h1>
+      <p class="login-subtitle">Secure Online Banking</p>
+    </div>
+
+    <div class="form-group">
+      <label for="accountNumber">Account Number</label>
+      <input
+        id="accountNumber"
+        type="text"
+        [(ngModel)]="accountNumber"
+        placeholder="e.g. ACC-1001"
+        (keyup.enter)="onLogin()"
+        autocomplete="username" />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        [(ngModel)]="password"
+        placeholder="••••••••••"
+        (keyup.enter)="onLogin()"
+        autocomplete="current-password" />
+    </div>
+
+    <div class="error-banner" *ngIf="errorMsg">
+      ⚠ {{ errorMsg }}
+    </div>
+
+    <button class="btn-login" [disabled]="loading" (click)="onLogin()">
+      <span *ngIf="!loading">Login</span>
+      <span *ngIf="loading" class="spinner"></span>
+    </button>
+
+    <!-- Demo hints -->
+    <div class="demo-box">
+      <p class="demo-title">Demo Accounts</p>
+      <table class="demo-table">
+        <thead>
+          <tr><th>Account</th><th>Owner</th><th>Balance</th><th>Triggers</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">ACC-1001</td>
+            <td>Alice Johnson</td>
+            <td class="success">$5,000</td>
+            <td class="badge-info">INFO</td>
+          </tr>
+          <tr>
+            <td class="mono">ACC-1002</td>
+            <td>Bob Smith</td>
+            <td class="warning">$150</td>
+            <td class="badge-warn">WARNING</td>
+          </tr>
+          <tr>
+            <td class="mono">ACC-1003</td>
+            <td>Charlie Brown</td>
+            <td class="success">$25,000</td>
+            <td class="badge-info">INFO</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="demo-password">Password for all accounts: <span class="mono">password123</span></p>
+    </div>
+
+  </div>
+
+</div>

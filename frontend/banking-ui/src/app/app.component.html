@@ -1,0 +1,35 @@
+<!-- src/app/app.component.html -->
+<div class="app-shell">
+
+  <!-- ── Top navigation bar ──────────────────────────────── -->
+  <nav class="navbar" *ngIf="isLoggedIn">
+    <div class="nav-brand">
+      <span class="nav-icon">⬡</span>
+      <span class="nav-title">FaultBank</span>
+    </div>
+
+    <div class="nav-links">
+      <a routerLink="/dashboard"
+         [class.active]="currentRoute === '/dashboard'"
+         routerLinkActive="active">
+        Dashboard
+      </a>
+      <a routerLink="/transfer"
+         [class.active]="currentRoute === '/transfer'"
+         routerLinkActive="active">
+        Transfer
+      </a>
+    </div>
+
+    <div class="nav-user">
+      <span class="user-label">{{ currentUser }}</span>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- ── Page outlet ─────────────────────────────────────── -->
+  <main class="page-content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

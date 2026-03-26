@@ -1,0 +1,115 @@
+<!-- src/app/components/transfer/transfer.component.html -->
+<div class="transfer-page">
+
+  <div class="transfer-card">
+
+    <!-- ── Header ────────────────────────────────────────── -->
+    <div class="card-header">
+      <a routerLink="/dashboard" class="back-link">← Dashboard</a>
+      <h1>Fund Transfer</h1>
+      <p class="card-subtitle">Move money between accounts</p>
+    </div>
+
+    <!-- ── Alert ─────────────────────────────────────────── -->
+    <div class="alert-banner"
+         *ngIf="alert"
+         [class]="'alert-' + alert.type">
+      <div class="alert-body">
+        <span class="alert-icon">
+          {{ alert.type === 'success' ? '✓' : alert.type === 'warning' ? '⚠' : '✕' }}
+        </span>
+        <div>
+          <p class="alert-msg">{{ alert.message }}</p>
+          <p class="alert-log">
+            Log written → <span class="log-level-tag" [class]="'tag-' + alert.type">
+              {{ alert.logLevel }}
+            </span>
+          </p>
+        </div>
+      </div>
+      <button class="alert-close" (click)="dismissAlert()">✕</button>
+    </div>
+
+    <!-- ── From ──────────────────────────────────────────── -->
+    <div class="from-box" *ngIf="currentAccount">
+      <p class="field-label">From Account</p>
+      <div class="from-account">
+        <div>
+          <p class="from-number mono">{{ currentAccount.accountNumber }}</p>
+          <p class="from-owner">{{ currentAccount.ownerName }}</p>
+        </div>
+        <div class="from-balance"
+             [class.low]="currentAccount.balance < 500">
+          {{ currentAccount.balance | currency:'USD' }}
+        </div>
+      </div>
+      <p class="warn-hint" *ngIf="currentAccount.balance < 500">
+        ⚠ Low balance – any transfer above {{ currentAccount.balance | currency }} will trigger a
+        <strong>WARNING log</strong>.
+      </p>
+    </div>
+
+    <!-- ── To ────────────────────────────────────────────── -->
+    <div class="form-group">
+      <label class="field-label">To Account</label>
+      <select [(ngModel)]="toAccountNumber" class="form-select">
+        <option value="">— Select destination account —</option>
+        <option *ngFor="let acc of allAccounts" [value]="acc.accountNumber">
+          {{ acc.accountNumber }} – {{ acc.ownerName }}
+        </option>
+      </select>
+    </div>
+
+    <!-- ── Amount ────────────────────────────────────────── -->
+    <div class="form-group">
+      <label class="field-label">Amount (USD)</label>
+      <div class="amount-input-wrap">
+        <span class="currency-symbol">$</span>
+        <input
+          type="number"
+          [(ngModel)]="amount"
+          placeholder="0.00"
+          min="0.01"
+          step="0.01"
+          class="amount-input" />
+      </div>
+    </div>
+
+    <!-- ── Log preview ────────────────────────────────────── -->
+    <div class="log-preview" *ngIf="currentAccount && amount">
+      <p class="preview-title">Expected log entry:</p>
+      <div class="preview-box"
+           [class.preview-warn]="currentAccount.balance < (amount || 0)"
+           [class.preview-info]="currentAccount.balance >= (amount || 0)">
+        <p class="preview-line">
+          <span class="pk">LogLevel:</span>
+          <span [class]="currentAccount.balance < (amount || 0) ? 'pv pv-warn' : 'pv pv-info'">
+            {{ currentAccount.balance < (amount || 0) ? '"Warning"' : '"Info"' }}
+          </span>
+        </p>
+        <p class="preview-line">
+          <span class="pk">ClassName:</span>
+          <span class="pv">"BankingController"</span>
+        </p>
+        <p class="preview-line">
+          <span class="pk">ErrorDesc:</span>
+          <span class="pv">
+            "{{ currentAccount.balance < (amount || 0)
+                ? 'Insufficient funds. AvailableBalance=' + (currentAccount.balance | currency) + ', RequestedAmount=' + (amount | currency)
+                : 'Transfer successful. From=' + currentAccount.accountNumber + ', Amount=' + (amount | currency) }}"
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Submit ─────────────────────────────────────────── -->
+    <button class="btn-transfer"
+            [disabled]="transferDisabled"
+            (click)="onTransfer()">
+      <span *ngIf="!loading">Confirm Transfer</span>
+      <span *ngIf="loading" class="spinner"></span>
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,89 @@
+/* src/app/app.component.scss */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Navbar ──────────────────────────────────────────────── */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .nav-icon { font-size: 1.2rem; color: var(--primary); }
+  .nav-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+
+  a {
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-sm);
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color .15s, background .15s;
+
+    &:hover, &.active {
+      color: var(--text);
+      background: var(--surface2);
+    }
+  }
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .user-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+}
+
+.btn-logout {
+  padding: 0.3rem 0.8rem;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+
+  &:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+}
+
+/* ── Page content ────────────────────────────────────────── */
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+}

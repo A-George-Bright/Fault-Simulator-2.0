@@ -69,6 +69,8 @@ try
         });
     }
 
+    app.UseCors("AllowAngular");
+
     app.UseHttpsRedirection();
     app.UseRouting();
     app.UseCors("BankingPolicy");
